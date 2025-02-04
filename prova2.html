@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wave Energy Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #waveImage {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function calculateWaveEnergy() {
+            // Constants
+            const rho = 1025; // Density of seawater in kg/m^3
+            const g = 9.81; // Gravity in m/s^2
+
+            // User inputs
+            let H = parseFloat(document.getElementById("wave_height").value); // Wave height in meters
+            let T = parseFloat(document.getElementById("wave_period").value); // Wave period in seconds
+            let eta = parseFloat(document.getElementById("efficiency").value) / 100; // Efficiency as fraction
+
+            if (isNaN(H) || isNaN(T) || isNaN(eta) || H <= 0 || T <= 0 || eta <= 0) {
+                alert("Please enter valid positive numbers.");
+                return;
+            }
+
+            // Energy Flux Calculation (Wave Power per meter width)
+            let P = (rho * g * g / (64 * Math.PI)) * H * H * T * eta; // Power per meter width
+
+            // Display results
+            document.getElementById("result").innerHTML = `Wave Power per meter width: ${P.toFixed(2)} W/m`;
+        }
+    </script>
+</head>
+<body>
+    <h2>Wave Energy Calculator</h2>
+    <label for="wave_height">Wave Height (m):</label>
+    <input type="number" id="wave_height" placeholder="Enter wave height"> <br>
+   
+    <label for="wave_period">Wave Period (s):</label>
+    <input type="number" id="wave_period" placeholder="Enter wave period"> <br>
+   
+    <label for="efficiency">Efficiency (%):</label>
+    <input type="number" id="efficiency" placeholder="Enter efficiency"> <br>
+   
+    <button onclick="calculateWaveEnergy()">Calculate</button>
+    <p id="result"></p>
+
+    <!-- Embedded Image -->
+    <img id="waveImage" src="photo-1508624217470-5ef0f947d8be.jpeg" alt="Wave Energy Illustration">
+</body>
+</html>
